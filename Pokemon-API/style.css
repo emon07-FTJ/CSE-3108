@@ -1,0 +1,383 @@
+/* ==========================================================================
+   1. RESET & FOUNDATION
+   ========================================================================== */
+
+/* Universal Box-Sizing Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default browser margins from structural elements (Added dd to reset) */
+body, h1, h2, h3, p, ul, dl, dd {
+  margin: 0;
+}
+
+/* Unstyled List Reset */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* Responsive Image Rule */
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Enforce visibility rules for hidden JS elements */
+[hidden] {
+  display: none !important;
+}
+
+/* ==========================================================================
+   2. DESIGN TOKENS (CSS VARIABLES)
+   ========================================================================== */
+
+:root {
+  --bg: #f4f6f8;
+  --surface: #ffffff;
+  --text: #1e293b;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --radius: 1rem;
+  --shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  
+  /* Dynamic type theme fallbacks */
+  --type-color: var(--border);
+  --type-text: var(--text);
+}
+
+/* ==========================================================================
+   3. PAGE LAYOUT & HEADER
+   ========================================================================== */
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  padding: 2rem 1rem;
+}
+
+main {
+  max-width: 40rem;
+  margin-inline: auto;
+  display: grid;
+  gap: 1.5rem;
+}
+
+header {
+  text-align: center;
+}
+
+header h1 {
+  font-size: clamp(1.5rem, 5vw, 2.25rem);
+}
+
+header p {
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   4. SEARCH FORM & QUICK BUTTONS
+   ========================================================================== */
+
+#search-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+
+#search-form label {
+  flex-basis: 100%;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+#search-form input[type="text"] {
+  flex: 1 1 12rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) * 0.5);
+  font-size: 1rem; /* Prevents auto-zoom on mobile iOS */
+}
+
+#search-form button[type="submit"] {
+  padding: 0.6rem 1.25rem;
+  background-color: var(--accent);
+  color: #ffffff;
+  border: 1px solid transparent; /* Fixes height mismatch with input */
+  border-radius: calc(var(--radius) * 0.5);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#search-form button[type="submit"]:hover {
+  background-color: var(--accent-hover);
+}
+
+/* Accessible Focus Ring */
+input:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.quick-search {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.quick-search button {
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.quick-search button:hover {
+  background-color: var(--border);
+}
+
+/* ==========================================================================
+   5. STATUS REGION (LOADING / ERROR / EMPTY)
+   ========================================================================== */
+
+.status {
+  text-align: center;
+  min-height: 1.5rem; /* Prevents layout jump on status changes */
+}
+
+#loading {
+  color: var(--text-muted);
+}
+
+#error {
+  color: #dc2626;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  padding: 0.5rem 1rem;
+  border-radius: calc(var(--radius) * 0.5);
+}
+
+/* ==========================================================================
+   6. POKÉMON CARD CONTAINER
+   ========================================================================== */
+
+.card {
+  display: grid;
+  gap: 1.25rem;
+  background-color: var(--surface);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  border: 3px solid var(--type-color);
+  box-shadow: var(--shadow);
+  transition: border-color 0.3s ease;
+}
+
+.card h3 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+#pokemon-name {
+  text-transform: capitalize;
+}
+
+#pokemon-id {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.card__artwork {
+  display: grid;
+  place-items: center;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--type-color) 25%, transparent),
+    transparent 70%
+  );
+  border-radius: var(--radius);
+}
+
+#pokemon-sprite {
+  max-height: 12rem;
+}
+
+/* Type Badges */
+.card__types {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.type-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background-color: var(--type-color);
+  color: var(--type-text, #ffffff);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* Physical Measurements */
+.card__measurements {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  text-align: center;
+  background-color: var(--bg);
+  padding: 0.75rem;
+  border-radius: calc(var(--radius) * 0.5);
+}
+
+.card__measurements dt {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.card__measurements dd {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   7. BASE STAT BARS
+   ========================================================================== */
+
+#pokemon-stats {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.stat {
+  display: grid;
+  grid-template-columns: 4rem 2.5rem 1fr;
+  align-items: center;
+  gap: 0.5rem;
+  --stat-percent: 0%; /* Injected dynamically by JS */
+}
+
+.stat__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.stat__value {
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+.stat__track {
+  height: 0.5rem;
+  background-color: var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.stat__fill {
+  display:block;
+  height: 100%;
+  width: var(--stat-percent);
+  background-color: var(--type-color);
+  transition: width 0.6s ease-out;
+}
+
+/* ==========================================================================
+   8. ABILITIES
+   ========================================================================== */
+
+#pokemon-abilities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+#pokemon-abilities li {
+  background-color: var(--bg);
+  padding: 0.35rem 0.75rem;
+  border-radius: calc(var(--radius) * 0.35);
+  font-size: 0.875rem;
+  text-transform: capitalize;
+}
+
+.ability__hidden {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-style: italic;
+  margin-left: 0.25rem;
+}
+
+/* ==========================================================================
+   9. TYPE THEMES (ALL 18 POKÉMON TYPES)
+   ========================================================================== */
+
+.type-normal   { --type-color: #A8A878; --type-text: #ffffff; }
+.type-fire     { --type-color: #F08030; --type-text: #ffffff; }
+.type-water    { --type-color: #6890F0; --type-text: #ffffff; }
+.type-grass    { --type-color: #78C850; --type-text: #111827; }
+.type-electric { --type-color: #F8D030; --type-text: #111827; }
+.type-ice      { --type-color: #98D8D8; --type-text: #111827; }
+.type-fighting { --type-color: #C03028; --type-text: #ffffff; }
+.type-poison   { --type-color: #A040A0; --type-text: #ffffff; }
+.type-ground   { --type-color: #E0C068; --type-text: #111827; }
+.type-flying   { --type-color: #A890F0; --type-text: #ffffff; }
+.type-psychic  { --type-color: #F85888; --type-text: #ffffff; }
+.type-bug      { --type-color: #A8B820; --type-text: #111827; }
+.type-rock     { --type-color: #B8A038; --type-text: #ffffff; }
+.type-ghost    { --type-color: #705898; --type-text: #ffffff; }
+.type-dragon   { --type-color: #7038F8; --type-text: #ffffff; }
+.type-steel    { --type-color: #B8B8D0; --type-text: #111827; }
+.type-fairy    { --type-color: #EE99AC; --type-text: #111827; }
+.type-dark     { --type-color: #705848; --type-text: #ffffff; }
+
+/* ==========================================================================
+   10. RESPONSIVE BREAKPOINTS & ACCESSIBILITY
+   ========================================================================== */
+
+@media (max-width: 480px) {
+  body {
+    padding: 1rem 0.75rem;
+  }
+  
+  #search-form button[type="submit"] {
+    width: 100%;
+  }
+}
+
+/* Reduced Motion Accessibility Rule */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

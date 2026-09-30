@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokémon Card Search</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <!-- Page Header -->
+    <header>
+      <h1>Pokémon Card Search</h1>
+      <p>Search any Pokémon by name or Pokédex ID.</p>
+    </header>
+
+    <!-- Search Form -->
+    <form id="search-form">
+      <label for="search-input">Pokémon name or ID</label>
+      <input 
+        id="search-input" 
+        type="text" 
+        name="pokemon" 
+        placeholder="e.g. pikachu" 
+        autocomplete="off" 
+        required
+      >
+      <button type="submit">Search</button>
+    </form>
+
+    <!-- Quick-Search Buttons -->
+    <div class="quick-search">
+      <button type="button" data-pokemon="pikachu">Pikachu</button>
+      <button type="button" data-pokemon="charizard">Charizard</button>
+      <button type="button" data-pokemon="bulbasaur">Bulbasaur</button>
+    </div>
+
+    <!-- Status Region -->
+    <section class="status" aria-live="polite">
+      <p id="loading" hidden>Loading Pokémon data…</p>
+      <p id="error" role="alert" hidden></p>
+      <p id="empty">Search for a Pokémon to get started.</p>
+    </section>
+
+    <!-- Pokémon Card Container -->
+    <section id="card" class="card" hidden>
+      <!-- Card Header -->
+      <header class="card__header">
+        <h2 id="pokemon-name"></h2>
+        <span id="pokemon-id"></span>
+      </header>
+
+      <!-- Artwork -->
+      <div class="card__artwork">
+        <img id="pokemon-sprite" src="" alt="" width="200" height="200">
+      </div>
+
+      <!-- Types -->
+      <ul id="pokemon-types" class="card__types" aria-label="Pokémon Types"></ul>
+
+      <!-- Physical Measurements -->
+      <dl class="card__measurements">
+        <div>
+          <dt>Height</dt>
+          <dd id="pokemon-height"></dd>
+        </div>
+        <div>
+          <dt>Weight</dt>
+          <dd id="pokemon-weight"></dd>
+        </div>
+      </dl>
+
+      <!-- Base Stats -->
+      <section class="card__stats">
+        <h3>Base Stats</h3>
+        <ul id="pokemon-stats"></ul>
+      </section>
+
+      <!-- Abilities -->
+      <section class="card__abilities">
+        <h3>Abilities</h3>
+        <ul id="pokemon-abilities"></ul>
+      </section>
+    </section>
+  </main>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
